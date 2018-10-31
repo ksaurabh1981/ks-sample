@@ -1,0 +1,13 @@
+"BasicScript"
+
+
+Scenario:  scenario_VAR_TXCD_Ref (0.0038)
+Position:  Bond_12214042,
+" ","POS/Portfolio","POS/Position Units","THEO/Value","THEO/Value@REL(scen,diff)","Maturity Date","Currency",
+"2014/12/05",KARE_BRD_AVT_4488465,282.0000,"296,033.9625 EUR",0.0000 EUR,2015/03/18,EUR,
+
+
+Scenario:  scenario_VAR_TXCD_Ref (0.0038)
+Position:  Bond_12281521,
+" ","POS/Portfolio","POS/Position Units","THEO/Value","THEO/Value@REL(scen,diff)","Maturity Date","Currency",
+"2014/12/05",KARE_BRD_AVT_4488465,762.0000,ERR!,ERR!,2015/04/30,RON,

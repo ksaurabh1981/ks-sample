@@ -20,6 +20,7 @@ import static ks.sample.eventbased.parser.EventBasedParserStates.End;
 import static ks.sample.eventbased.parser.EventBasedParserStates.H_IA;
 import static ks.sample.eventbased.parser.EventBasedParserStates.L_AIB;
 import static ks.sample.eventbased.parser.EventBasedParserStates.L_GPSAL;
+import static ks.sample.eventbased.parser.EventBasedParserStates.L_GSSAL;
 import static ks.sample.eventbased.parser.EventBasedParserStates.L_IA;
 import static ks.sample.eventbased.parser.EventBasedParserStates.L_IS;
 
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -56,7 +58,7 @@ public class EventBasedParser implements Parser<Map<String, String>>{
 		/* L_IA		*/ 		{L_IA,		L_IS,		L_IA,		L_IA,		L_IA,		L_IA,		EErr},
 		/* L_GSSAL	*/ 		{L_IA,		L_IS,		L_IA,		L_IA,		L_IA,		L_IA,		EErr},
 		/* L_IS		*/ 		{L_AIB,		EErr,		EErr,		EErr,		EErr,		L_IS,		EErr},
-		/* L_AIB	*/ 		{L_AIB,		L_AIB,		L_GPSAL,	L_GPSAL,	L_AIB,		L_AIB,		EErr},
+		/* L_AIB	*/ 		{L_AIB,		L_AIB,		L_GPSAL,	L_GSSAL,	L_AIB,		L_AIB,		EErr},
 		/* L_GPSAL	*/ 		{EErr,		EErr,		EErr,		CK_Start,	EErr,		EErr,		EErr},
 		
 					//		THIS PART READS AND STORES ALL THE KEYS OF THE CSV PART OF THE GIVEN FORMAT:
@@ -153,7 +155,7 @@ public class EventBasedParser implements Parser<Map<String, String>>{
 		
 		//Initialization of the parser
 		this.keyList = new LinkedList<>();
-		this.resultMap = new HashMap<>(defaultMapCapacity, 1.0f);
+		this.resultMap = new LinkedHashMap<>(defaultMapCapacity, 1.0f);
 		this.currentState = Init_main;
 	}
 	
@@ -211,8 +213,9 @@ public class EventBasedParser implements Parser<Map<String, String>>{
 		
 		while(!EOB.equals(this.currentState)) {
 			this.populateBuffer();
+			
 			currentChar = this.buffer[this.positionIntoBuffer++];
-			System.out.print(currentChar);
+			
 			this.currentState = this.getNextState(EventBasedParserTransitions.getTransition(currentChar));
 			this.process(builder, currentChar, this.currentState);
 			
